@@ -21,7 +21,7 @@ $(TARGET).dis: $(TARGET).elf
 # Force recompile if *any* header has changed.
 $(TARGET).elf: $(SRCS) $(LIB_SRCS) $(HDRS)
 	@echo Compiling all sources to elf file $@
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(TARGET).elf $(SRCS) $(LIB_SRCS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(LINKFLAGS) -o $(TARGET).elf $(SRCS) $(LIB_SRCS)
 
 .PHONY: clean
 # Delete all bin, map, object, and elf files, and other assorted crud
