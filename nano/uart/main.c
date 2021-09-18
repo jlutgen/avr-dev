@@ -1,6 +1,6 @@
-#ifndef F_CPU
-#define F_CPU 16000000UL
-#endif
+/*
+ * UART
+ */
 
 #include <avr/io.h>
 
@@ -26,26 +26,29 @@ void uart_write(char* s) {
         // Wait for empty transmit buffer
         while (!(UCSR0A & (1 << UDRE0)))
             ;
-        // Put data into buffer, sends the data
+        // Put data into buffer (sends the data)
         UDR0 = *s++;
     }
 }
 
 void config_uart(void) {
-    UBRR0 = 8;                             // baud rate 115200
-    UCSR0B |= (1 << TXEN0) | (1 << RXEN0); // tx/rx enable
+    UBRR0 = 8;                              // Baud rate 115200
+    UCSR0B |= (1 << TXEN0) | (1 << RXEN0);  // TX/RX enable
+}
+
+void config_gpio(void) {
+    DDRB = 0b00100000;  // PB5: output pin
 }
 
 int main(void) {
     config_uart();
-    DDRB = 0b00100000;  // PB5: output pin
+    config_gpio();
     uart_write("Hello from Nano!\r\n");
     while (1) {
         uart_read(msg, 80);
         uart_write("received:");
         uart_write(msg);
         uart_write("\r\n");
-        // toggle LED
-        PORTB ^= 0b00100000;
+        PORTB ^= 0b00100000;  // Toggle LED
     }
 }
