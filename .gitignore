@@ -5,10 +5,10 @@
 *.o
 *.a
 *.elf
+*.d
 *.dep
 *.dis
 log.*
 *.swp
 *~     
-.vscode/*
 *.code-workspace
